@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "471556535431",
+    "project_id": "al-ridha-c6588",
+    "storage_bucket": "al-ridha-c6588.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471556535431:android:21bc51c8945114f4557422",
+        "android_client_info": {
+          "package_name": "com.example.admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABFUtG_6u8Mm18XOjrhhz32SnEu8KEKx8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
