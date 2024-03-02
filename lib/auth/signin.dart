@@ -196,11 +196,12 @@ class SignIn extends StatelessWidget {
                                   child: ElevatedButton(
                                     onPressed: () {
                                       if (signinKey.currentState!.validate()) {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const Home()));
+                                        signinController.adminLogin(
+                                            signinController
+                                                .emailController.text,
+                                            signinController
+                                                .passwordController.text,
+                                            context);
                                       }
 
                                       // Add your button onPressed logic here

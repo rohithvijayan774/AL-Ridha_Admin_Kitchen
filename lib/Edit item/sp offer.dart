@@ -1,7 +1,9 @@
 import 'package:admin/Edit%20item/Sp%20Item%20details.dart';
 import 'package:admin/Edit%20item/Sp%20add%20item.dart';
+import 'package:admin/controller/admin_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SpOffer extends StatelessWidget {
   const SpOffer({super.key});
@@ -9,34 +11,53 @@ class SpOffer extends StatelessWidget {
   Widget build(BuildContext context) {
     final Height = MediaQuery.of(context).size.height;
     final Width = MediaQuery.of(context).size.width;
-    List<Map<String, dynamic>> items = [
-      {
-        'title': 'Grilled chicken',
-        'image': 'asset/images/sp6.png',
-        'page': SpItemDetails(title: 'Grilled chicken',image:'asset/images/sp6.png',price: '119',discription: 'Grilled chicken' ,)
-      },
-      {
-        'title': 'Shawaya',
-        'image': 'asset/images/menu/sp2.png',
-        'page': SpItemDetails(title: 'Shawaya',image:'asset/images/menu/sp2.png',price: '119',discription:'Shawaya' ,)
-      },
-      {
-        'title': 'Tandoori Chicken',
-        'image': 'asset/images/menu/delicious-chicken-table.jpg',
-        'page': SpItemDetails(title:'Tandoori Chicken',image:'asset/images/menu/delicious-chicken-table.jpg',price: '119',discription: 'Tandoori Chicken',)
-      },
-      {
-        'title': 'Chicken Lollipop',
-        'image': 'asset/images/menu/sp5.png',
-        'page': SpItemDetails(title: 'Tandoori Chicken',image:'asset/images/menu/sp5.png',price: '119',discription: 'Tandoori Chicken' ,)
-      },
-
-    ];
+    // List<Map<String, dynamic>> items = [
+    //   {
+    //     'title': 'Grilled chicken',
+    //     'image': 'asset/images/sp6.png',
+    //     'page': const SpItemDetails(
+    //       title: 'Grilled chicken',
+    //       image: 'asset/images/sp6.png',
+    //       price: '119',
+    //       discription: 'Grilled chicken',
+    //     )
+    //   },
+    //   {
+    //     'title': 'Shawaya',
+    //     'image': 'asset/images/menu/sp2.png',
+    //     'page': const SpItemDetails(
+    //       title: 'Shawaya',
+    //       image: 'asset/images/menu/sp2.png',
+    //       price: '119',
+    //       discription: 'Shawaya',
+    //     )
+    //   },
+    //   {
+    //     'title': 'Tandoori Chicken',
+    //     'image': 'asset/images/menu/delicious-chicken-table.jpg',
+    //     'page': const SpItemDetails(
+    //       title: 'Tandoori Chicken',
+    //       image: 'asset/images/menu/delicious-chicken-table.jpg',
+    //       price: '119',
+    //       discription: 'Tandoori Chicken',
+    //     )
+    //   },
+    //   {
+    //     'title': 'Chicken Lollipop',
+    //     'image': 'asset/images/menu/sp5.png',
+    //     'page': const SpItemDetails(
+    //       title: 'Tandoori Chicken',
+    //       image: 'asset/images/menu/sp5.png',
+    //       price: '119',
+    //       discription: 'Tandoori Chicken',
+    //     )
+    //   },
+    // ];
     return Scaffold(
       body: Container(
         height: Height,
         width: Width,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(
                   'asset/images/background.png',
@@ -55,14 +76,14 @@ class SpOffer extends StatelessWidget {
                     Container(
                       height: Height * 0.08,
                       width: Width * 0.08,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Color(0xffF6AF40),
                       ),
                       child: Center(
                         child: IconButton(
                           icon: ImageIcon(
-                            AssetImage('asset/icons/left.png'),
+                            const AssetImage('asset/icons/left.png'),
                             size: Height * 0.06,
                             color: Colors.black,
                           ),
@@ -107,22 +128,27 @@ class SpOffer extends StatelessWidget {
                                     fontSize: Height * 0.04,
                                     fontWeight: FontWeight.bold),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               InkWell(
-                                onTap: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) =>SpItemAdd() ,));
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const AddItems(
+                                            category: 'special offers'),
+                                      ));
                                 },
                                 child: SizedBox(
                                     height: Height * 0.07,
                                     width: Width * 0.06,
                                     child: Container(
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: Color(0xff3C8A3C),
                                       ),
                                       child: Icon(
                                         Icons.add,
-                                        size: Height*0.05,
+                                        size: Height * 0.05,
                                         color: Colors.white,
                                       ),
                                     )),
@@ -163,49 +189,109 @@ class SpOffer extends StatelessWidget {
                               height: Height * 0.7,
                               width: Width * 0.8,
                               // color: Colors.greenAccent,
-                              child: GridView.builder(
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  crossAxisSpacing: 60,
-                                  mainAxisSpacing: 60,
-                                  childAspectRatio: 5 / 3,
-                                ),
-                                itemCount: items.length,
-                                itemBuilder: (context, index) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                items[index]['page'],
-                                          ));
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white,
-                                        border: Border.all(),
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                items[index]['image']),
-                                            fit: BoxFit.cover),
-                                      ),
-                                      child: Align(
-                                        alignment: Alignment.bottomCenter,
-                                        child: Text(
-                                          items[index]['title'],
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: Width * 0.015,
-                                              color: Colors.white),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ))
+                              child: Consumer<AdminController>(
+                                  builder: (context, specialController, _) {
+                                return FutureBuilder(
+                                    future: specialController
+                                        .fetchProducts('special offers'),
+                                    builder: (context, snapshot) {
+                                      return snapshot.connectionState ==
+                                              ConnectionState.waiting
+                                          ? const Center(
+                                              child: CircularProgressIndicator(
+                                                color: Colors.black,
+                                              ),
+                                            )
+                                          : specialController
+                                                  .productsList.isEmpty
+                                              ? const Center(
+                                                  child:
+                                                      Text('No Products Found'),
+                                                )
+                                              : GridView.builder(
+                                                  gridDelegate:
+                                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                                    crossAxisCount: 3,
+                                                    crossAxisSpacing: 60,
+                                                    mainAxisSpacing: 60,
+                                                    childAspectRatio: 5 / 3,
+                                                  ),
+                                                  itemCount: specialController
+                                                      .productsList.length,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return GestureDetector(
+                                                      onTap: () {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  SpItemDetails(
+                                                                title: specialController
+                                                                    .productsList[
+                                                                        index]
+                                                                    .productTitle,
+                                                                discription: specialController
+                                                                    .productsList[
+                                                                        index]
+                                                                    .productDescription,
+                                                                price: specialController
+                                                                    .productsList[
+                                                                        index]
+                                                                    .productPrice
+                                                                    .toString(),
+                                                                image: specialController
+                                                                    .productsList[
+                                                                        index]
+                                                                    .productImage,
+                                                              ),
+                                                            ));
+                                                      },
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                          color: Colors.white,
+                                                          border: Border.all(),
+                                                          image:
+                                                              DecorationImage(
+                                                                  image:
+                                                                      NetworkImage(
+                                                                    specialController
+                                                                        .productsList[
+                                                                            index]
+                                                                        .productImage,
+                                                                  ),
+                                                                  fit: BoxFit
+                                                                      .cover),
+                                                        ),
+                                                        child: Align(
+                                                          alignment: Alignment
+                                                              .bottomCenter,
+                                                          child: Text(
+                                                            specialController
+                                                                .productsList[
+                                                                    index]
+                                                                .productTitle,
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize:
+                                                                    Width *
+                                                                        0.015,
+                                                                color: Colors
+                                                                    .black),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                    });
+                              }))
                         ],
                       ),
                     ),

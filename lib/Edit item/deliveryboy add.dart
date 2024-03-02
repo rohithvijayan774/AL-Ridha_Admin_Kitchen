@@ -1,5 +1,9 @@
+import 'package:admin/Dashboard/home.dart';
+import 'package:admin/controller/admin_controller.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddDelievryBoy extends StatelessWidget {
   const AddDelievryBoy({super.key});
@@ -7,20 +11,14 @@ class AddDelievryBoy extends StatelessWidget {
   Widget build(BuildContext context) {
     final Height = MediaQuery.of(context).size.height;
     final Width = MediaQuery.of(context).size.width;
-    List<Map<String, dynamic>> items = [
-      {
-        'title': 'Deliveryboy 1',
-      },
-      {
-        'title': 'Deliveryboy 2',
-      },
-    ];
+
+    final addDelvBoyController = Provider.of<AdminController>(context);
 
     return Scaffold(
       body: Container(
         height: Height,
         width: Width,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(
                   'asset/images/background.png',
@@ -39,14 +37,14 @@ class AddDelievryBoy extends StatelessWidget {
                     Container(
                       height: Height * 0.08,
                       width: Width * 0.08,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Color(0xffF6AF40),
                       ),
                       child: Center(
                         child: IconButton(
                           icon: ImageIcon(
-                            AssetImage('asset/icons/left.png'),
+                            const AssetImage('asset/icons/left.png'),
                             size: Height * 0.06,
                             color: Colors.black,
                           ),
@@ -91,7 +89,7 @@ class AddDelievryBoy extends StatelessWidget {
                                     fontSize: Height * 0.04,
                                     fontWeight: FontWeight.bold),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               // InkWell(
                               //   onTap: () {},
                               //   child: SizedBox(
@@ -112,25 +110,47 @@ class AddDelievryBoy extends StatelessWidget {
                               SizedBox(
                                 height: Height * 0.05,
                                 width: Width * 0.07,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    // Add your button click logic here
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0xff3C8A3C),
-                                    foregroundColor: Colors.white, // Text color
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(Height *
-                                          0.01), // Adjust the border radius as needed
+                                child: Consumer<AdminController>(builder:
+                                    (context, addDelvBoyController, _) {
+                                  return ElevatedButton(
+                                    onPressed: () {
+                                      if (addDelvBoyController
+                                          .addDelvBoyKey.currentState!
+                                          .validate()) {
+                                        addDelvBoyController.saveDeliveryboy(
+                                            addDelvBoyController
+                                                .namecontroller.text,
+                                            addDelvBoyController
+                                                .userEmailcontroller.text,
+                                            addDelvBoyController
+                                                .passwordcontroller.text,
+                                            addDelvBoyController
+                                                .licensenumbercontroller.text,
+                                            addDelvBoyController
+                                                .phonenumbercontroller.text,
+                                            addDelvBoyController
+                                                .vehiclenumbercontroller.text,
+                                            context);
+                                      }
+                                      // Add your button click logic here
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xff3C8A3C),
+                                      foregroundColor:
+                                          Colors.white, // Text color
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(Height *
+                                            0.01), // Adjust the border radius as needed
+                                      ),
                                     ),
-                                  ),
-                                  child: Text(
-                                    'Create',
-                                    style: TextStyle(
-                                      fontSize: Height * 0.018,
+                                    child: Text(
+                                      'Create',
+                                      style: TextStyle(
+                                        fontSize: Height * 0.018,
+                                      ),
                                     ),
-                                  ),
-                                ),
+                                  );
+                                }),
                               ),
                               SizedBox(
                                 width: Width * 0.02,
@@ -144,7 +164,7 @@ class AddDelievryBoy extends StatelessWidget {
                             height: Height * 0.7,
                             width: Width * 0.8,
                             // color: Colors.greenAccent,
-                            child: MyNameFieldWidget(),
+                            child: const MyNameFieldWidget(),
                           )
                         ],
                       ),
@@ -166,246 +186,318 @@ class AddDelievryBoy extends StatelessWidget {
   }
 }
 
-class MyNameFieldWidget extends StatefulWidget {
-  @override
-  _MyNameFieldWidgetState createState() => _MyNameFieldWidgetState();
-}
+class MyNameFieldWidget extends StatelessWidget {
+  const MyNameFieldWidget({super.key});
 
-class _MyNameFieldWidgetState extends State<MyNameFieldWidget> {
   // Create TextEditingController for each text field
-  TextEditingController _namecontroller = TextEditingController();
-  TextEditingController _useridcontroller = TextEditingController();
-  TextEditingController _passwordcontroller = TextEditingController();
-  TextEditingController _confirmpasswordcontroller = TextEditingController();
-  TextEditingController _vehiclenumbercontroller = TextEditingController();
-  TextEditingController _licensenumbercontroller = TextEditingController();
-
-  // @override
-  // void dispose() {
-  //   // Dispose controllers when the widget is disposed
-  //   _controller1.dispose();
-  //   _controller2.dispose();
-  //   _controller3.dispose();
-  //   _controller4.dispose();
-  //   _controller5.dispose();
-  //   _controller6.dispose();
-  //   super.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
     final Height = MediaQuery.of(context).size.height;
     final Width = MediaQuery.of(context).size.width;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: Height*0.03,),
-            Row(
-              children: [
-                Text(
-                  'Name',
-                  style: TextStyle(
-                      fontSize: Height * 0.03, fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-            SizedBox(
-              height: Height * 0.1, // Adjust the height as needed
-              width: Width * 0.3, // Adjust the width as needed
-              child: TextFormField(
-                controller: _namecontroller,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(width: 2),
-                    borderRadius: BorderRadius.circular(10.0),
+    final addDelvBoyController = Provider.of<AdminController>(context);
+    return Form(
+      key: addDelvBoyController.addDelvBoyKey,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: Height * 0.03,
+              ),
+              Row(
+                children: [
+                  Text(
+                    'Name',
+                    style: TextStyle(
+                        fontSize: Height * 0.03, fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: Height * 0.1, // Adjust the height as needed
+                width: Width * 0.3, // Adjust the width as needed
+                child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "* required field";
+                    } else {
+                      return null;
+                    }
+                  },
+                  controller: addDelvBoyController.namecontroller,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(width: 2),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide:
+                          const BorderSide(width: 2, color: Colors.black),
+                    ),
+                    focusColor: Colors.greenAccent,
+                    hintText: 'Enter your Name',
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(width: 2, color: Colors.black),
-                  ),
-                  focusColor: Colors.greenAccent,
-                  hintText: 'Enter your Name',
                 ),
               ),
-            ),
-            SizedBox(
-              height: Height * 0.02,
-            ),
-            Row(
-              children: [
-                Text(
-                  'User Id',
-                  style: TextStyle(
-                      fontSize: Height * 0.03, fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-            SizedBox(
-              height: Height * 0.1, // Adjust the height as needed
-              width: Width * 0.3, // Adjust the width as needed
-              child: TextFormField(
-                controller: _useridcontroller,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(width: 2),
-                    borderRadius: BorderRadius.circular(10.0),
+              SizedBox(
+                height: Height * 0.02,
+              ),
+              Row(
+                children: [
+                  Text(
+                    'User Email',
+                    style: TextStyle(
+                        fontSize: Height * 0.03, fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: Height * 0.1, // Adjust the height as needed
+                width: Width * 0.3, // Adjust the width as needed
+                child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "* required field";
+                    } else {
+                      return null;
+                    }
+                  },
+                  controller: addDelvBoyController.userEmailcontroller,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(width: 2),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide:
+                          const BorderSide(width: 2, color: Colors.black),
+                    ),
+                    focusColor: Colors.greenAccent,
+                    hintText: 'Enter User Email',
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(width: 2, color: Colors.black),
-                  ),
-                  focusColor: Colors.greenAccent,
-                  hintText: 'Enter User Id',
                 ),
               ),
-            ),
-            SizedBox(
-              height: Height * 0.02,
-            ),
-            Row(
-              children: [
-                Text(
-                  'Password',
-                  style: TextStyle(
-                      fontSize: Height * 0.03, fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-            SizedBox(
-              height: Height * 0.1, // Adjust the height as needed
-              width: Width * 0.3, // Adjust the width as needed
-              child: TextFormField(
-                controller: _passwordcontroller,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(width: 2),
-                    borderRadius: BorderRadius.circular(10.0),
+              SizedBox(
+                height: Height * 0.02,
+              ),
+              Row(
+                children: [
+                  Text(
+                    'Password',
+                    style: TextStyle(
+                        fontSize: Height * 0.03, fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: Height * 0.1, // Adjust the height as needed
+                width: Width * 0.3, // Adjust the width as needed
+                child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "* required field";
+                    } else {
+                      return null;
+                    }
+                  },
+                  controller: addDelvBoyController.passwordcontroller,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(width: 2),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide:
+                          const BorderSide(width: 2, color: Colors.black),
+                    ),
+                    focusColor: Colors.greenAccent,
+                    hintText: 'Enter Password',
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(width: 2, color: Colors.black),
-                  ),
-                  focusColor: Colors.greenAccent,
-                  hintText: 'Enter Password',
                 ),
               ),
-            ),
-            SizedBox(
-              height: 0.02,
-            ),
-            SizedBox(
-              height: Height * 0.02,
-            ),
-            Row(
-              children: [
-                Text(
-                  'Confirm password',
-                  style: TextStyle(
-                      fontSize: Height * 0.03, fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-            SizedBox(
-              height: Height * 0.1, // Adjust the height as needed
-              width: Width * 0.3, // Adjust the width as needed
-              child: TextFormField(
-                controller: _confirmpasswordcontroller,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(width: 2),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(width: 2, color: Colors.black),
-                  ),
-                  focusColor: Colors.greenAccent,
-                  hintText: 'Confirm password',
-                ),
+              const SizedBox(
+                height: 0.02,
               ),
-            )
-          ],
-        ),
+              SizedBox(
+                height: Height * 0.02,
+              ),
+              Row(
+                children: [
+                  Text(
+                    'Confirm password',
+                    style: TextStyle(
+                        fontSize: Height * 0.03, fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: Height * 0.1, // Adjust the height as needed
+                width: Width * 0.3, // Adjust the width as needed
+                child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "* required field";
+                    } else if (value !=
+                        addDelvBoyController.passwordcontroller.text) {
+                      return "* password didnot match";
+                    } else {
+                      return null;
+                    }
+                  },
+                  controller: addDelvBoyController.confirmpasswordcontroller,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(width: 2),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide:
+                          const BorderSide(width: 2, color: Colors.black),
+                    ),
+                    focusColor: Colors.greenAccent,
+                    hintText: 'Confirm password',
+                  ),
+                ),
+              )
+            ],
+          ),
 
-        SizedBox(width: Width*0.1,),
+          SizedBox(
+            width: Width * 0.1,
+          ),
 
-        // Column with 2 text fields
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text('(optional)',style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: Height*0.02,
-                ),),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  'Vehicle Number',
-                  style: TextStyle(
-                      fontSize: Height * 0.03, fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-            SizedBox(
-              height: Height * 0.1, // Adjust the height as needed
-              width: Width * 0.3, // Adjust the width as needed
-              child: TextFormField(
-                controller:_vehiclenumbercontroller,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(width: 2),
-                    borderRadius: BorderRadius.circular(10.0),
+          // Column with 2 text fields
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    '(optional)',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: Height * 0.02,
+                    ),
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(width: 2, color: Colors.black),
+                ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    'Vehicle Number',
+                    style: TextStyle(
+                        fontSize: Height * 0.03, fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: Height * 0.1, // Adjust the height as needed
+                width: Width * 0.3, // Adjust the width as needed
+                child: TextFormField(
+                  controller: addDelvBoyController.vehiclenumbercontroller,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(width: 2),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide:
+                          const BorderSide(width: 2, color: Colors.black),
+                    ),
+                    focusColor: Colors.greenAccent,
+                    hintText: 'Enter vehicle Number',
                   ),
-                  focusColor: Colors.greenAccent,
-                  hintText: 'Enter vehicle Number',
                 ),
               ),
-            ),
-            SizedBox(
-              height: Height * 0.02,
-            ),
-            Row(
-              children: [
-                Text(
-                  'License Number',
-                  style: TextStyle(
-                      fontSize: Height * 0.03, fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-            SizedBox(
-              height: Height * 0.1, // Adjust the height as needed
-              width: Width * 0.3, // Adjust the width as needed
-              child: TextFormField(
-                controller: _licensenumbercontroller,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(width: 2),
-                    borderRadius: BorderRadius.circular(10.0),
+              SizedBox(
+                height: Height * 0.02,
+              ),
+              Row(
+                children: [
+                  Text(
+                    'License Number',
+                    style: TextStyle(
+                        fontSize: Height * 0.03, fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: Height * 0.1, // Adjust the height as needed
+                width: Width * 0.3, // Adjust the width as needed
+                child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "* required field";
+                    } else {
+                      return null;
+                    }
+                  },
+                  controller: addDelvBoyController.licensenumbercontroller,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(width: 2),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide:
+                          const BorderSide(width: 2, color: Colors.black),
+                    ),
+                    focusColor: Colors.greenAccent,
+                    hintText: 'Enter License Number',
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(width: 2, color: Colors.black),
-                  ),
-                  focusColor: Colors.greenAccent,
-                  hintText: 'Enter License Number',
                 ),
               ),
-            )
-          ],
-        ),
-      ],
+              SizedBox(
+                height: Height * 0.02,
+              ),
+              Row(
+                children: [
+                  Text(
+                    'Mobile Number',
+                    style: TextStyle(
+                        fontSize: Height * 0.03, fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: Height * 0.1, // Adjust the height as needed
+                width: Width * 0.3, // Adjust the width as needed
+                child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "* required field";
+                    } else {
+                      return null;
+                    }
+                  },
+                  controller: addDelvBoyController.phonenumbercontroller,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(width: 2),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide:
+                          const BorderSide(width: 2, color: Colors.black),
+                    ),
+                    focusColor: Colors.greenAccent,
+                    hintText: 'Enter Mobile Number',
+                  ),
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

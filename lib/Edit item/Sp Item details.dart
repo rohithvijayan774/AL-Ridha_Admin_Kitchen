@@ -30,9 +30,9 @@ class _SpItemDetailsState extends State<SpItemDetails> {
       body: Container(
         height: Height,
         width: Width,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage(
+                image: NetworkImage(
                   'asset/images/background.png',
                 ),
                 fit: BoxFit.cover)),
@@ -49,14 +49,14 @@ class _SpItemDetailsState extends State<SpItemDetails> {
                     Container(
                       height: Height * 0.08,
                       width: Width * 0.08,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Color(0xffF6AF40),
                       ),
                       child: Center(
                         child: IconButton(
                           icon: ImageIcon(
-                            AssetImage('asset/icons/left.png'),
+                            const AssetImage('asset/icons/left.png'),
                             size: Height * 0.06,
                             color: Colors.black,
                           ),
@@ -100,14 +100,14 @@ class _SpItemDetailsState extends State<SpItemDetails> {
                                   fontSize: Height * 0.04,
                                   fontWeight: FontWeight.bold),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             InkWell(
                               onTap: () {},
                               child: SizedBox(
                                   height: Height * 0.06,
                                   width: Width * 0.06,
                                   child: Container(
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: Color(0xff911f2a),
                                     ),
@@ -196,12 +196,12 @@ class _SpItemDetailsState extends State<SpItemDetails> {
                                                 _showAlertDialog(context);
                                               },
                                               style: ElevatedButton.styleFrom(
-                                                padding: EdgeInsets.symmetric(
+                                                padding: const EdgeInsets.symmetric(
                                                     vertical: 15,
                                                     horizontal: 30),
                                                 backgroundColor:
                                                     Colors.grey.shade100,
-                                                foregroundColor: Color(
+                                                foregroundColor: const Color(
                                                     0xff911f2a), // Button text color
                                                 side: BorderSide(
                                                     color: Colors.black,
@@ -243,12 +243,12 @@ class _SpItemDetailsState extends State<SpItemDetails> {
                                                 // Add your button click logic here
                                               },
                                               style: ElevatedButton.styleFrom(
-                                                padding: EdgeInsets.symmetric(
+                                                padding: const EdgeInsets.symmetric(
                                                     vertical: 15,
                                                     horizontal: 30),
                                                 backgroundColor:
                                                     Colors.grey.shade100,
-                                                foregroundColor: Color(
+                                                foregroundColor: const Color(
                                                     0xff911f2a), // Button text color
                                                 side: BorderSide(
                                                     color: Colors.black,
@@ -290,12 +290,12 @@ class _SpItemDetailsState extends State<SpItemDetails> {
                                                 // Add your button click logic here
                                               },
                                               style: ElevatedButton.styleFrom(
-                                                padding: EdgeInsets.symmetric(
+                                                padding: const EdgeInsets.symmetric(
                                                     vertical: 15,
                                                     horizontal: 30),
                                                 backgroundColor:
                                                     Colors.grey.shade100,
-                                                foregroundColor: Color(
+                                                foregroundColor: const Color(
                                                     0xff911f2a), // Button text color
                                                 side: BorderSide(
                                                     color: Colors.black,
@@ -337,12 +337,12 @@ class _SpItemDetailsState extends State<SpItemDetails> {
                                                 // Add your button click logic here
                                               },
                                               style: ElevatedButton.styleFrom(
-                                                padding: EdgeInsets.symmetric(
+                                                padding: const EdgeInsets.symmetric(
                                                     vertical: 15,
                                                     horizontal: 30),
                                                 backgroundColor:
                                                     Colors.grey.shade100,
-                                                foregroundColor: Color(
+                                                foregroundColor: const Color(
                                                     0xff911f2a), // Button text color
                                                 side: BorderSide(
                                                     color: Colors.black,
@@ -384,12 +384,12 @@ class _SpItemDetailsState extends State<SpItemDetails> {
                                                 // Add your button click logic here
                                               },
                                               style: ElevatedButton.styleFrom(
-                                                padding: EdgeInsets.symmetric(
+                                                padding: const EdgeInsets.symmetric(
                                                     vertical: 15,
                                                     horizontal: 30),
                                                 backgroundColor:
                                                     Colors.grey.shade100,
-                                                foregroundColor: Color(
+                                                foregroundColor: const Color(
                                                     0xff911f2a), // Button text color
                                                 side: BorderSide(
                                                     color: Colors.black,
@@ -445,7 +445,7 @@ class _SpItemDetailsState extends State<SpItemDetails> {
                                     ),
                                   ],
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 Row(
                                   children: [
                                     SizedBox(
@@ -460,7 +460,7 @@ class _SpItemDetailsState extends State<SpItemDetails> {
                                               Width * 0.01),
                                           color: Colors.white,
                                           border: Border.all(
-                                              color: Color(0xff911f2a),
+                                              color: const Color(0xff911f2a),
                                               width: Width * 0.001)),
                                       child: Row(
                                         children: [
@@ -472,7 +472,7 @@ class _SpItemDetailsState extends State<SpItemDetails> {
                                                   fontSize: Height * 0.02,
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.black)),
-                                          Spacer(),
+                                          const Spacer(),
                                           Image.asset(
                                             'asset/icons/discount.png',
                                             width: Width * 0.05,
@@ -484,7 +484,7 @@ class _SpItemDetailsState extends State<SpItemDetails> {
                                         ],
                                       ),
                                     ),
-                                    Spacer(),
+                                    const Spacer(),
                                     Container(
                                       height: Height * 0.07,
                                       width: Width * 0.15,
@@ -493,7 +493,7 @@ class _SpItemDetailsState extends State<SpItemDetails> {
                                               Width * 0.01),
                                           color: Colors.white,
                                           border: Border.all(
-                                              color: Color(0xff911f2a),
+                                              color: const Color(0xff911f2a),
                                               width: Width * 0.001)),
                                       child: Row(
                                         children: [
@@ -507,7 +507,7 @@ class _SpItemDetailsState extends State<SpItemDetails> {
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.black),
                                           ),
-                                          Spacer(),
+                                          const Spacer(),
                                           Image.asset(
                                             'asset/icons/rupee.png',
                                             width: Width * 0.05,
@@ -593,17 +593,17 @@ void _showAlertDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Enter title here'),
+        title: const Text('Enter title here'),
         content: TextField(
           controller: textFieldController,
-          decoration: InputDecoration(hintText: 'Type something...'),
+          decoration: const InputDecoration(hintText: 'Type something...'),
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () {
               Navigator.of(context).pop(); // Close the alert dialog
             },
-            child: Text(
+            child: const Text(
               'Cancel',
               style: TextStyle(
                 color: Color(0xff911f2a),
@@ -621,9 +621,9 @@ void _showAlertDialog(BuildContext context) {
               width: Width * 0.04,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(Width * 0.01),
-                color: Color(0xff3C8A3C),
+                color: const Color(0xff3C8A3C),
               ),
-              child: Center(
+              child: const Center(
                 child: Text(
                   'OK',
                   style: TextStyle(

@@ -7,6 +7,7 @@ import 'package:admin/auth/signin.dart';
 import 'package:admin/controller/admin_controller.dart';
 import 'package:admin/controller/kitchen_controller.dart';
 import 'package:admin/firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,13 +37,21 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'poppins',
-          // useMaterial3: true,
-          // primaryColor: Colors.black,
-          // primarySwatch: MaterialColor()
         ),
-        home: SignIn(),
-        // home: Home(),
-        // home: OnGoingOrders()
+        home: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                if (FirebaseAuth.instance.currentUser!.uid ==
+                    'YEVbJHbAYMSI0D6m52Kc1u5Xagl1') {
+                  return const Home();
+                } else {
+                  return const SignIn();
+                }
+              } else {
+                return const SignIn();
+              }
+            }),
       ),
     );
   }
