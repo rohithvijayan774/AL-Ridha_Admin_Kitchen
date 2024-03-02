@@ -112,6 +112,9 @@ class AddItems extends StatelessWidget {
                                                 .productPricecontroller.text),
                                             int.parse(addProductController
                                                 .productOffercontroller.text),
+                                            int.parse(addProductController
+                                                .productAvailabilitycontroller
+                                                .text),
                                             category,
                                             context)
                                         .then(
@@ -461,6 +464,61 @@ class AddItems extends StatelessWidget {
                                                     ),
                                                     Image.asset(
                                                       'asset/icons/discount.png',
+                                                      width: Width * 0.05,
+                                                      height: Height * 0.05,
+                                                    ),
+                                                  ],
+                                                )),
+                                          ),
+                                          SizedBox(
+                                            height: Height * 0.01,
+                                          ),
+                                          SizedBox(
+                                            height: Height * 0.06,
+                                            width: Width * 0.35,
+                                            child: ElevatedButton(
+                                                onPressed: () async {
+                                                  // Add your button click logic here
+                                                  _showAlertDialog(
+                                                      context,
+                                                      addProductController
+                                                          .productAvailabilitycontroller,
+                                                      'availability');
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 15,
+                                                      horizontal: 30),
+                                                  backgroundColor:
+                                                      Colors.grey.shade100,
+                                                  foregroundColor: const Color(
+                                                      0xff911f2a), // Button text color
+                                                  side: BorderSide(
+                                                      color: Colors.black,
+                                                      width: Width *
+                                                          0.001), // Border color
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius
+                                                        .circular(Width *
+                                                            0.01), // Border radius for rounded corners
+                                                  ),
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      'Add Availability',
+                                                      style: TextStyle(
+                                                          fontSize:
+                                                              Width * 0.015),
+                                                    ),
+                                                    Image.asset(
+                                                      'asset/icons/add.png',
+                                                      color: const Color(
+                                                          0xff911f2a),
                                                       width: Width * 0.05,
                                                       height: Height * 0.05,
                                                     ),

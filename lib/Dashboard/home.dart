@@ -5,6 +5,8 @@ import 'package:admin/Dashboard/Notifications.dart';
 import 'package:admin/Dashboard/OnGoingOrders.dart';
 import 'package:admin/Dashboard/UserList.dart';
 import 'package:admin/Dashboard/deliveryboy.dart';
+import 'package:admin/auth/signin.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -18,82 +20,108 @@ class Home extends StatelessWidget {
       {
         'title': 'On Going Orders',
         'image': 'asset/images/on going.jpg',
-        'page': OnGoingOrders()
+        'page': const OnGoingOrders()
       },
       {
         'title': 'Edit Item',
         'image': 'asset/images/edit item.jpg',
-        'page': EditItem()
+        'page': const EditItem()
       },
       {
         'title': 'Users List',
         'image': 'asset/images/userlist.jpg',
-        'page': UserList()
+        'page': const UserList()
       },
       {
         'title': 'Completed List',
         'image': 'asset/images/cmpled food orders.jpg',
-        'page': Completed()
+        'page': const Completed()
       },
       {
         'title': 'My Shop',
         'image': 'asset/images/myshop.jpg',
-        'page': MyShop()
+        'page': const MyShop()
       },
       {
         'title': 'Delivery Boy',
         'image': 'asset/images/delivery boy.jpg',
-        'page': DelievryBoy()
+        'page': const DelievryBoy()
       },
     ];
     return Scaffold(
         body: Container(
             height: Height,
             width: Width,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
                       'asset/images/background.png',
                     ),
                     fit: BoxFit.cover)),
             child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Column(children: [
                   Row(
                     children: [
-                      Text(
+                      const Text(
                         'Dashboard',
                         style: TextStyle(
                             fontSize: 30, fontWeight: FontWeight.bold),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
-                              color: Color(0xffF6AF40)),
+                              color: Colors.black),
+                          child: TextButton(
+                              onPressed: () {
+                                FirebaseAuth.instance.signOut().then((value) =>
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                          builder: (context) => const SignIn(),
+                                        ),
+                                        (route) => false));
+                              },
+                              child: const Text(
+                                'SignOut',
+                                style: TextStyle(color: Color(0xffF6AF40)),
+                              ))),
+                      const SizedBox(
+                        width: 50,
+                      ),
+                      Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: const Color(0xffF6AF40)),
                           child: IconButton(
                               onPressed: () {
-                                Navigator.push(context,  MaterialPageRoute(builder: (context) => AdminNotification()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const AdminNotification()));
                               },
-                              icon: ImageIcon(
+                              icon: const ImageIcon(
                                 AssetImage(
                                   'asset/icons/bell.png',
-
                                 ),
                                 color: Colors.black,
                               ))),
-                      SizedBox(width: Width*0.02,),
+                      SizedBox(
+                        width: Width * 0.02,
+                      ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Divider(
+                  const Divider(
                     height: 2,
                     thickness: 1,
                     color: Colors.black,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   Container(
@@ -102,9 +130,10 @@ class Home extends StatelessWidget {
                     // color: Colors.greenAccent.shade100,
                     child: Container(
                         child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
-                        crossAxisSpacing: 30 ,
+                        crossAxisSpacing: 30,
                         mainAxisSpacing: 30,
                         childAspectRatio: 6 / 3.3,
                       ),
@@ -142,9 +171,7 @@ class Home extends StatelessWidget {
                           ),
                         );
                       },
-                    )
-
-                        ),
+                    )),
                   )
                 ]))));
   }

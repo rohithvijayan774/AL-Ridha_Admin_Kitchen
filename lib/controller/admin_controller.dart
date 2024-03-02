@@ -179,6 +179,7 @@ class AdminController extends ChangeNotifier {
   TextEditingController productDescriptioncontroller = TextEditingController();
   TextEditingController productPricecontroller = TextEditingController();
   TextEditingController productOffercontroller = TextEditingController();
+  TextEditingController productAvailabilitycontroller = TextEditingController();
 
   void clearFields() {
     productTitlecontroller.clear();
@@ -186,6 +187,7 @@ class AdminController extends ChangeNotifier {
     productDescriptioncontroller.clear();
     productPricecontroller.clear();
     productOffercontroller.clear();
+    productAvailabilitycontroller.clear();
     pickProductPic = null;
     notifyListeners();
   }
@@ -199,6 +201,7 @@ class AdminController extends ChangeNotifier {
       String productDescription,
       int productPrice,
       int productOffer,
+      int productAvailability,
       String collectionName,
       context) async {
     try {
@@ -209,7 +212,8 @@ class AdminController extends ChangeNotifier {
           productDescription: productDescription,
           productImage: productImage,
           productPrice: productPrice,
-          productOffer: productOffer);
+          productOffer: productOffer,
+          productAvailability: productAvailability);
 
       await docID.set(_prodcutsModel!.toMap());
       await firebaseFirestore
@@ -256,6 +260,7 @@ class AdminController extends ChangeNotifier {
         String productDescription = doc['productDescription'];
         int productPrice = doc['productPrice'];
         int productOffer = doc['productOffer'];
+        int productAvailability = doc['productAvailability'];
 
         products = ProductsModel(
             productID: productID,
@@ -263,7 +268,8 @@ class AdminController extends ChangeNotifier {
             productDescription: productDescription,
             productImage: productImage,
             productPrice: productPrice,
-            productOffer: productOffer);
+            productOffer: productOffer,
+            productAvailability: productAvailability);
 
         productsList.add(products!);
       }
@@ -354,6 +360,10 @@ class AdminController extends ChangeNotifier {
       DocumentReference docRef =
           firebaseFirestore.collection(collection).doc(productsModel.productID);
       await docRef.update({'productImage': imageUrl});
+      await firebaseFirestore
+          .collection('My Shop')
+          .doc(productsModel.productID)
+          .update({'productImage': imageUrl});
       productsModel.productImage = imageUrl;
       _prodcutsModel = productsModel;
 
