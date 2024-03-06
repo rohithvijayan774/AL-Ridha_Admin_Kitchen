@@ -1,5 +1,7 @@
+import 'package:admin/controller/admin_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class UserList extends StatelessWidget {
   const UserList({super.key});
@@ -7,21 +9,12 @@ class UserList extends StatelessWidget {
   Widget build(BuildContext context) {
     final Height = MediaQuery.of(context).size.height;
     final Width = MediaQuery.of(context).size.width;
-    List<Map<String, dynamic>> items = [
-      {
-        'title': 'User2',
-      },
-      {
-        'title': 'User2',
-
-      },
-      ];
 
     return Scaffold(
       body: Container(
         height: Height,
         width: Width,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(
                   'asset/images/background.png',
@@ -40,14 +33,14 @@ class UserList extends StatelessWidget {
                     Container(
                       height: Height * 0.08,
                       width: Width * 0.08,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Color(0xffF6AF40),
                       ),
                       child: Center(
                         child: IconButton(
                           icon: ImageIcon(
-                            AssetImage('asset/icons/left.png'),
+                            const AssetImage('asset/icons/left.png'),
                             size: Height * 0.06,
                             color: Colors.black,
                           ),
@@ -92,7 +85,7 @@ class UserList extends StatelessWidget {
                                     fontSize: Height * 0.04,
                                     fontWeight: FontWeight.bold),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               // InkWell(
                               //   onTap: () {},
                               //   child: SizedBox(
@@ -146,46 +139,98 @@ class UserList extends StatelessWidget {
                               height: Height * 0.7,
                               width: Width * 0.8,
                               // color: Colors.greenAccent,
-                              child: ListView.builder(
-                                  // padding: EdgeInsets.symmetric(
-                                  //     vertical: Height * 0.05),
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: items.length,
-                                  itemBuilder: (context, index) {
-                                    return Container(
-                                        margin: EdgeInsets.all(Width * 0.01),
-                                        height: Height * 0.1,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(
-                                              Width * 0.01),
-                                          border: Border.all(),
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            SizedBox(
-                                              width: Width * 0.05,
-                                            ),
-                                            Text(
-                                              items[index]['title'],
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: Height * 0.03),
-                                            ),
-                                            Spacer(),
-                                            IconButton(
-                                              iconSize: Height * 0.05,
-                                              onPressed: () {},
-                                              icon: Icon(Icons
-                                                  .delete_outline_outlined),
-                                              color: Color(0xff911f2a),
-                                            ),
-                                            SizedBox(
-                                              width: Width * 0.05,
-                                            ),
-                                          ],
-                                        ));
-                                  }))
+                              child: Consumer<AdminController>(
+                                  builder: (context, usersController, _) {
+                                return FutureBuilder(
+                                    future: usersController.fetchUsers(),
+                                    builder: (context, snapshot) {
+                                      return snapshot.connectionState ==
+                                              ConnectionState.waiting
+                                          ? const Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            )
+                                          : usersController.usersList.isEmpty
+                                              ? const Center(
+                                                  child: Text('No users found'),
+                                                )
+                                              : ListView.builder(
+                                                  // padding: EdgeInsets.symmetric(
+                                                  //     vertical: Height * 0.05),
+                                                  scrollDirection:
+                                                      Axis.vertical,
+                                                  itemCount: usersController
+                                                      .usersList.length,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return snapshot
+                                                                .connectionState ==
+                                                            ConnectionState
+                                                                .waiting
+                                                        ? const Center(
+                                                            child:
+                                                                CircularProgressIndicator(),
+                                                          )
+                                                        : Container(
+                                                            margin:
+                                                                EdgeInsets.all(
+                                                                    Width *
+                                                                        0.01),
+                                                            height:
+                                                                Height * 0.1,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color:
+                                                                  Colors.white,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          Width *
+                                                                              0.01),
+                                                              border:
+                                                                  Border.all(),
+                                                            ),
+                                                            child: Row(
+                                                              children: [
+                                                                SizedBox(
+                                                                  width: Width *
+                                                                      0.05,
+                                                                ),
+                                                                Text(
+                                                                  usersController
+                                                                      .usersList[
+                                                                          index]
+                                                                      .userName,
+                                                                  style: TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          Height *
+                                                                              0.03),
+                                                                ),
+                                                                const Spacer(),
+                                                                IconButton(
+                                                                  iconSize:
+                                                                      Height *
+                                                                          0.05,
+                                                                  onPressed:
+                                                                      () {},
+                                                                  icon: const Icon(
+                                                                      Icons
+                                                                          .delete_outline_outlined),
+                                                                  color: const Color(
+                                                                      0xff911f2a),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: Width *
+                                                                      0.05,
+                                                                ),
+                                                              ],
+                                                            ));
+                                                  });
+                                    });
+                              }))
                         ],
                       ),
                     ),

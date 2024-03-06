@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:admin/Dashboard/home.dart';
 import 'package:admin/models/deliveryboy_model.dart';
 import 'package:admin/models/products_model.dart';
+import 'package:admin/models/user_model.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -147,11 +148,11 @@ class AdminController extends ChangeNotifier {
   Future fetchDeliveryBoys() async {
     try {
       deliveryBoysList.clear();
-      CollectionReference doctorsRef =
+      CollectionReference boysRef =
           firebaseFirestore.collection('deliveryBoys');
-      QuerySnapshot doctorsSnapshot = await doctorsRef.get();
+      QuerySnapshot boysSnapshot = await boysRef.get();
 
-      for (var doc in doctorsSnapshot.docs) {
+      for (var doc in boysSnapshot.docs) {
         String delvryBoyID = doc['delvryBoyID'];
         String delvryBoyName = doc['delvryBoyName'];
         String delvryBoyEmail = doc['delvryBoyEmail'];
@@ -368,6 +369,39 @@ class AdminController extends ChangeNotifier {
       _prodcutsModel = productsModel;
 
       notifyListeners();
+    }
+  }
+
+  List<UserModel> usersList = [];
+  UserModel? users;
+
+  Future fetchUsers() async {
+    try {
+      usersList.clear();
+
+      CollectionReference usersRef = firebaseFirestore.collection('users');
+      QuerySnapshot usersSnapshot = await usersRef.get();
+
+      for (var doc in usersSnapshot.docs) {
+        String userID = doc['userID'];
+        String userName = doc['userName'];
+        String userEmail = doc['userEmail'];
+        int userNumber = doc['userNumber'];
+        String userAddress = doc['userAddress'] ?? '';
+        String proPic = doc['proPic'] ?? '';
+
+        users = UserModel(
+            userID: userID,
+            userName: userName,
+            userEmail: userEmail,
+            userNumber: userNumber,
+            proPic: proPic,
+            userAddress: userAddress);
+
+        usersList.add(users!);
+      }
+    } catch (e) {
+      print(e);
     }
   }
 }
