@@ -167,282 +167,314 @@ class _MyShopState extends State<MyShop> {
                               ),
                             ],
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Colors.grey.shade200,
-                                borderRadius: BorderRadius.circular(20)),
-                            margin: EdgeInsets.all(Width * 0.01),
+                          Expanded(
                             child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: FutureBuilder(
-                                  future:
-                                      myShopController.fetchProducts('My Shop'),
-                                  builder: (context, snapshot) {
-                                    print(
-                                        '///////////// ${myShopController.productsList}');
-                                    return snapshot.connectionState ==
-                                            ConnectionState.waiting
-                                        ? const Center(
-                                            child: CircularProgressIndicator(
-                                              color: Colors.black,
-                                            ),
-                                          )
-                                        : myShopController.productsList.isEmpty
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.grey.shade200,
+                                    borderRadius: BorderRadius.circular(20)),
+                                margin: EdgeInsets.all(Width * 0.01),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: FutureBuilder(
+                                      future: myShopController
+                                          .fetchProducts('My Shop'),
+                                      builder: (context, snapshot) {
+                                        print(
+                                            '///////////// ${myShopController.productsList}');
+                                        return snapshot.connectionState ==
+                                                ConnectionState.waiting
                                             ? const Center(
                                                 child:
-                                                    Text('No Products Found'),
+                                                    CircularProgressIndicator(
+                                                  color: Colors.black,
+                                                ),
                                               )
-                                            : SingleChildScrollView(
-                                                child: DataTable(
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          color: Colors.black),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              Width * 0.01)),
-                                                  columns: [
-                                                    DataColumn(
-                                                      label: Container(
-                                                        width: Width * 0.07,
-                                                        height: Height * 0.06,
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Center(
-                                                            child: Text(
-                                                          'Item No',
-                                                          style: TextStyle(
-                                                              fontSize: Height *
-                                                                  0.025,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        )),
-                                                      ),
-                                                    ),
-                                                    DataColumn(
-                                                      label: Container(
-                                                        width: Width * 0.09,
-                                                        height: Height * 0.06,
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Center(
-                                                            child: Text(
-                                                          'Item Name',
-                                                          style: TextStyle(
-                                                              fontSize: Height *
-                                                                  0.025,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        )),
-                                                      ),
-                                                    ),
-                                                    DataColumn(
-                                                      label: Container(
-                                                        width: Width * 0.07,
-                                                        height: Height * 0.06,
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Center(
-                                                            child: Text(
-                                                          'Image',
-                                                          style: TextStyle(
-                                                              fontSize: Height *
-                                                                  0.025,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        )),
-                                                      ),
-                                                    ),
-                                                    DataColumn(
-                                                      label: Container(
-                                                        width: Width * 0.07,
-                                                        height: Height * 0.06,
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Center(
-                                                            child: Text(
-                                                          'Price',
-                                                          style: TextStyle(
-                                                              fontSize: Height *
-                                                                  0.025,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        )),
-                                                      ),
-                                                    ),
-                                                    DataColumn(
-                                                      label: Container(
-                                                        width: Width * 0.08,
-                                                        height: Height * 0.06,
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Center(
-                                                            child: Text(
-                                                          'Availability',
-                                                          style: TextStyle(
-                                                              fontSize: Height *
-                                                                  0.025,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        )),
-                                                      ),
-                                                    ),
-                                                    DataColumn(
-                                                      label: Container(
-                                                        width: Width * 0.05,
-                                                        height: Height * 0.06,
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: const Center(
-                                                            child: Text('')),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                  rows: List<DataRow>.generate(
-                                                    myShopController
-                                                        .productsList.length,
-                                                    (index) => DataRow(
-                                                      cells: [
-                                                        DataCell(
-                                                          Container(
-                                                            width: Width * 0.1,
+                                            : myShopController
+                                                    .productsList.isEmpty
+                                                ? const Center(
+                                                    child: Text(
+                                                        'No Products Found'),
+                                                  )
+                                                : SingleChildScrollView(
+                                                    child: DataTable(
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(
+                                                              color: Colors
+                                                                  .black),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      Width *
+                                                                          0.01)),
+                                                      columns: [
+                                                        DataColumn(
+                                                          label: Container(
+                                                            width: Width * 0.07,
                                                             height:
                                                                 Height * 0.06,
                                                             alignment: Alignment
                                                                 .center,
-                                                            child:
-                                                                TextFormField(
-                                                              initialValue:
-                                                                  (index + 1)
-                                                                      .toString(),
-                                                              onChanged:
-                                                                  (value) {
-                                                                setState(() {
-                                                                  myShopController
-                                                                      .productsList[
-                                                                          index]
-                                                                      .productID = value;
-                                                                });
-                                                              },
-                                                            ),
+                                                            child: Center(
+                                                                child: Text(
+                                                              'Item No',
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      Height *
+                                                                          0.025,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            )),
                                                           ),
                                                         ),
-                                                        DataCell(
-                                                          Container(
-                                                            width: Width * 0.1,
+                                                        DataColumn(
+                                                          label: Container(
+                                                            width: Width * 0.09,
                                                             height:
                                                                 Height * 0.06,
                                                             alignment: Alignment
                                                                 .center,
-                                                            child:
-                                                                TextFormField(
-                                                              initialValue:
-                                                                  myShopController
+                                                            child: Center(
+                                                                child: Text(
+                                                              'Item Name',
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      Height *
+                                                                          0.025,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            )),
+                                                          ),
+                                                        ),
+                                                        DataColumn(
+                                                          label: Container(
+                                                            width: Width * 0.07,
+                                                            height:
+                                                                Height * 0.06,
+                                                            alignment: Alignment
+                                                                .center,
+                                                            child: Center(
+                                                                child: Text(
+                                                              'Image',
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      Height *
+                                                                          0.025,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            )),
+                                                          ),
+                                                        ),
+                                                        DataColumn(
+                                                          label: Container(
+                                                            width: Width * 0.07,
+                                                            height:
+                                                                Height * 0.06,
+                                                            alignment: Alignment
+                                                                .center,
+                                                            child: Center(
+                                                                child: Text(
+                                                              'Price',
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      Height *
+                                                                          0.025,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            )),
+                                                          ),
+                                                        ),
+                                                        DataColumn(
+                                                          label: Container(
+                                                            width: Width * 0.08,
+                                                            height:
+                                                                Height * 0.06,
+                                                            alignment: Alignment
+                                                                .center,
+                                                            child: Center(
+                                                                child: Text(
+                                                              'Availability',
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      Height *
+                                                                          0.025,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            )),
+                                                          ),
+                                                        ),
+                                                        DataColumn(
+                                                          label: Container(
+                                                            width: Width * 0.05,
+                                                            height:
+                                                                Height * 0.06,
+                                                            alignment: Alignment
+                                                                .center,
+                                                            child: const Center(
+                                                                child:
+                                                                    Text('')),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                      rows: List<
+                                                          DataRow>.generate(
+                                                        myShopController
+                                                            .productsList
+                                                            .length,
+                                                        (index) => DataRow(
+                                                          cells: [
+                                                            DataCell(
+                                                              Container(
+                                                                width:
+                                                                    Width * 0.1,
+                                                                height: Height *
+                                                                    0.06,
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child:
+                                                                    TextFormField(
+                                                                  initialValue:
+                                                                      (index +
+                                                                              1)
+                                                                          .toString(),
+                                                                  onChanged:
+                                                                      (value) {
+                                                                    setState(
+                                                                        () {
+                                                                      myShopController
+                                                                          .productsList[
+                                                                              index]
+                                                                          .productID = value;
+                                                                    });
+                                                                  },
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            DataCell(
+                                                              Container(
+                                                                width:
+                                                                    Width * 0.1,
+                                                                height: Height *
+                                                                    0.06,
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child:
+                                                                    TextFormField(
+                                                                  initialValue: myShopController
                                                                       .productsList[
                                                                           index]
                                                                       .productTitle,
-                                                              onChanged:
-                                                                  (value) {
-                                                                setState(() {
-                                                                  myShopController
-                                                                      .productsList[
-                                                                          index]
-                                                                      .productTitle = value;
-                                                                });
-                                                              },
+                                                                  onChanged:
+                                                                      (value) {
+                                                                    setState(
+                                                                        () {
+                                                                      myShopController
+                                                                          .productsList[
+                                                                              index]
+                                                                          .productTitle = value;
+                                                                    });
+                                                                  },
+                                                                ),
+                                                              ),
                                                             ),
-                                                          ),
-                                                        ),
-                                                        DataCell(
-                                                          Container(
-                                                            width: Width * 0.1,
-                                                            height:
-                                                                Height * 0.06,
-                                                            alignment: Alignment
-                                                                .center,
-                                                            child: Image.network(
-                                                                myShopController
-                                                                    .productsList[
-                                                                        index]
-                                                                    .productImage),
-                                                          ),
-                                                        ),
-                                                        DataCell(
-                                                          Container(
-                                                            width: Width * 0.1,
-                                                            height:
-                                                                Height * 0.06,
-                                                            alignment: Alignment
-                                                                .center,
-                                                            child:
-                                                                TextFormField(
-                                                              initialValue:
-                                                                  myShopController
+                                                            DataCell(
+                                                              Container(
+                                                                width:
+                                                                    Width * 0.1,
+                                                                height: Height *
+                                                                    0.06,
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child: Image.network(
+                                                                    myShopController
+                                                                        .productsList[
+                                                                            index]
+                                                                        .productImage),
+                                                              ),
+                                                            ),
+                                                            DataCell(
+                                                              Container(
+                                                                width:
+                                                                    Width * 0.1,
+                                                                height: Height *
+                                                                    0.06,
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child:
+                                                                    TextFormField(
+                                                                  initialValue: myShopController
                                                                       .productsList[
                                                                           index]
                                                                       .productPrice
                                                                       .toString(),
-                                                              onChanged:
-                                                                  (value) {
-                                                                setState(() {
-                                                                  myShopController
+                                                                  onChanged:
+                                                                      (value) {
+                                                                    setState(
+                                                                        () {
+                                                                      myShopController
                                                                           .productsList[
                                                                               index]
-                                                                          .productPrice =
-                                                                      int.parse(
-                                                                          value);
-                                                                });
-                                                              },
+                                                                          .productPrice = int.parse(value);
+                                                                    });
+                                                                  },
+                                                                ),
+                                                              ),
                                                             ),
-                                                          ),
-                                                        ),
-                                                        DataCell(
-                                                          Container(
-                                                            width: Width * 0.1,
-                                                            height:
-                                                                Height * 0.06,
-                                                            alignment: Alignment
-                                                                .center,
-                                                            child:
-                                                                TextFormField(
-                                                              initialValue: myShopController
-                                                                  .productsList[
-                                                                      index]
-                                                                  .productAvailability
-                                                                  .toString(),
-                                                              onChanged:
-                                                                  (value) {
-                                                                setState(() {
-                                                                  myShopController
+                                                            DataCell(
+                                                              Container(
+                                                                width:
+                                                                    Width * 0.1,
+                                                                height: Height *
+                                                                    0.06,
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child:
+                                                                    TextFormField(
+                                                                  initialValue: myShopController
+                                                                      .productsList[
+                                                                          index]
+                                                                      .productAvailability
+                                                                      .toString(),
+                                                                  onChanged:
+                                                                      (value) {
+                                                                    setState(
+                                                                        () {
+                                                                      myShopController
                                                                           .productsList[
                                                                               index]
-                                                                          .productAvailability =
-                                                                      int.parse(
-                                                                          value);
-                                                                });
-                                                              },
+                                                                          .productAvailability = int.parse(value);
+                                                                    });
+                                                                  },
+                                                                ),
+                                                              ),
                                                             ),
-                                                          ),
+                                                            DataCell(IconButton(
+                                                              onPressed: () {},
+                                                              icon: const Icon(Icons
+                                                                  .delete_outline_outlined),
+                                                              color: const Color(
+                                                                  0xff911f2a),
+                                                              iconSize:
+                                                                  Height * 0.04,
+                                                            ))
+                                                          ],
                                                         ),
-                                                        DataCell(IconButton(
-                                                          onPressed: () {},
-                                                          icon: const Icon(Icons
-                                                              .delete_outline_outlined),
-                                                          color: const Color(
-                                                              0xff911f2a),
-                                                          iconSize:
-                                                              Height * 0.04,
-                                                        ))
-                                                      ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                ),
-                                              );
-                                  }),
+                                                  );
+                                      }),
+                                ),
+                              ),
                             ),
                           ),
                         ],

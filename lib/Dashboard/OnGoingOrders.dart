@@ -1,5 +1,7 @@
 import 'package:admin/Edit%20item/ongoing%20alert.dart';
+import 'package:admin/controller/admin_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class OnGoingOrders extends StatelessWidget {
   const OnGoingOrders({super.key});
@@ -12,7 +14,7 @@ class OnGoingOrders extends StatelessWidget {
       body: Container(
         height: Height,
         width: Width,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(
                   'asset/images/background.png',
@@ -31,14 +33,14 @@ class OnGoingOrders extends StatelessWidget {
                     Container(
                       height: Height * 0.08,
                       width: Width * 0.08,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Color(0xffF6AF40),
                       ),
                       child: Center(
                         child: IconButton(
                           icon: ImageIcon(
-                            AssetImage('asset/icons/left.png'),
+                            const AssetImage('asset/icons/left.png'),
                             size: Height * 0.06,
                             color: Colors.black,
                           ),
@@ -84,230 +86,337 @@ class OnGoingOrders extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Container(
+                          SizedBox(
                               height: Height * 0.8,
                               width: Width * 0.75,
-                              child: ListView.builder(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: Height * 0.05),
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: 4,
-                                  itemBuilder: (context, index) {
-                                    return Container(
-                                      margin: EdgeInsets.all(Width * 0.02),
-                                      height: Height * 0.3,
-                                      width: Width * 0.1,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(Width * 0.01),
-                                        border: Border.all(),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          SizedBox(
-                                            height: Height * 0.01,
-                                          ),
-                                          Row(
-                                            children: [
-                                              SizedBox(
-                                                width: Width * 0.01,
-                                              ),
-                                              Text(
-                                                '5 min ago',
-                                                style: TextStyle(
-                                                  fontSize: Height * 0.015,
-                                                  color: Color(0xff911f2a),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Row(children: [
-                                            SizedBox(
-                                              width: Width * 0.01,
-                                            ),
-                                            Text(
-                                              'Order No:',
-                                              style: TextStyle(
-                                                  fontSize: Height * 0.02),
-                                            ),
-                                            SizedBox(
-                                              width: Width * 0.25,
-                                            ),
-                                            Text('Address',
-                                                style: TextStyle(
-                                                    fontSize: Height * 0.02)),
-                                            SizedBox(
-                                              width: Width * 0.01,
-                                            ),
-                                          ]),
-                                          Divider(
-                                            height: Height * 0.01,
-                                            color: Colors.black,
-                                          ),
-                                          Container(
-                                            height: Height * 0.16,
-                                            decoration: BoxDecoration(
-                                                // color: Colors.blueAccent,
-                                                ),
-                                            child: SingleChildScrollView(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                              child: Consumer<AdminController>(
+                                  builder: (context, orderController, _) {
+                                return FutureBuilder(
+                                    future: orderController.fetchOrders(),
+                                    builder: (context, snapshot) {
+                                      return snapshot.connectionState ==
+                                              ConnectionState.waiting
+                                          ? const Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            )
+                                          : ListView.builder(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: Height * 0.05),
+                                              scrollDirection: Axis.vertical,
+                                              itemCount: orderController
+                                                  .ordersList.length,
+                                              itemBuilder: (context, index) {
+                                                return Container(
+                                                  margin: EdgeInsets.all(
+                                                      Width * 0.02),
+                                                  // height: Height * 0.3,
+                                                  width: Width * 0.1,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            Width * 0.01),
+                                                    border: Border.all(),
+                                                  ),
+                                                  child: Column(
                                                     children: [
                                                       SizedBox(
-                                                        width: Width * 0.01,
+                                                        height: Height * 0.01,
                                                       ),
-                                                      Column(
+                                                      Row(
                                                         children: [
-                                                          Text(
-                                                            'No',
-                                                            style: TextStyle(
-                                                              fontSize:
-                                                                  Height * 0.02,
-                                                            ),
+                                                          SizedBox(
+                                                            width: Width * 0.01,
                                                           ),
                                                           Text(
-                                                            '1',
+                                                            '5 min ago',
                                                             style: TextStyle(
-                                                              fontSize:
-                                                                  Height * 0.02,
+                                                              fontSize: Height *
+                                                                  0.015,
+                                                              color: const Color(
+                                                                  0xff911f2a),
                                                             ),
                                                           ),
                                                         ],
                                                       ),
-                                                      SizedBox(
-                                                        width: Width * 0.025,
+                                                      Row(children: [
+                                                        SizedBox(
+                                                          width: Width * 0.01,
+                                                        ),
+                                                        Text(
+                                                          'Order No: ${index + 1}',
+                                                          style: TextStyle(
+                                                              fontSize: Height *
+                                                                  0.02),
+                                                        ),
+                                                        SizedBox(
+                                                          width: Width * 0.25,
+                                                        ),
+                                                        Text('Count',
+                                                            style: TextStyle(
+                                                                fontSize:
+                                                                    Height *
+                                                                        0.02)),
+                                                        SizedBox(
+                                                          width: Width * 0.25,
+                                                        ),
+                                                        Text('Address',
+                                                            style: TextStyle(
+                                                                fontSize:
+                                                                    Height *
+                                                                        0.02)),
+                                                        SizedBox(
+                                                          width: Width * 0.01,
+                                                        ),
+                                                      ]),
+                                                      Divider(
+                                                        height: Height * 0.01,
+                                                        color: Colors.black,
                                                       ),
-                                                      Column(
+                                                      Container(
+                                                        height: Height * 0.16,
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                                // color: Colors.blueAccent,
+                                                                ),
+                                                        child:
+                                                            ListView.separated(
+                                                                separatorBuilder:
+                                                                    (context,
+                                                                            index) =>
+                                                                        const SizedBox(
+                                                                          height:
+                                                                              10,
+                                                                        ),
+                                                                itemCount: orderController
+                                                                    .ordersList[
+                                                                        index]
+                                                                    .orderedItems
+                                                                    .length,
+                                                                itemBuilder:
+                                                                    (context,
+                                                                        index2) {
+                                                                  print(orderController
+                                                                      .ordersList[
+                                                                          0]
+                                                                      .status);
+                                                                  return Column(
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.start,
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.start,
+                                                                        children: [
+                                                                          SizedBox(
+                                                                            width:
+                                                                                Width * 0.01,
+                                                                          ),
+                                                                          Column(
+                                                                            children: [
+                                                                              Text(
+                                                                                'No',
+                                                                                style: TextStyle(
+                                                                                  fontSize: Height * 0.02,
+                                                                                ),
+                                                                              ),
+                                                                              Text(
+                                                                                '${index2 + 1}',
+                                                                                style: TextStyle(
+                                                                                  fontSize: Height * 0.02,
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          SizedBox(
+                                                                            width:
+                                                                                Width * 0.025,
+                                                                          ),
+                                                                          SizedBox(
+                                                                            width:
+                                                                                100,
+                                                                            child:
+                                                                                Column(
+                                                                              mainAxisAlignment: MainAxisAlignment.start,
+                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                              children: [
+                                                                                Text(
+                                                                                  'Item',
+                                                                                  style: TextStyle(
+                                                                                    fontSize: Height * 0.02,
+                                                                                  ),
+                                                                                ),
+                                                                                Text(
+                                                                                  orderController.ordersList[index].orderedItems[index2]['productname'],
+                                                                                  style: TextStyle(
+                                                                                    fontSize: Height * 0.02,
+                                                                                  ),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                          SizedBox(
+                                                                            width:
+                                                                                Width * 0.21,
+                                                                          ),
+                                                                          Column(
+                                                                            children: [
+                                                                              SizedBox(
+                                                                                width: 100,
+                                                                                child: Text(
+                                                                                  orderController.ordersList[index].orderedItems[index2]['count'].toString(),
+                                                                                  style: TextStyle(
+                                                                                    fontSize: Height * 0.02,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          SizedBox(
+                                                                            width:
+                                                                                Width * 0.21,
+                                                                          ),
+                                                                          Column(
+                                                                            children: [
+                                                                              SizedBox(
+                                                                                width: 100,
+                                                                                child: Text(
+                                                                                  index2 < 1 ? orderController.ordersList[index].userAddress : '',
+                                                                                  style: TextStyle(
+                                                                                    fontSize: Height * 0.02,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          )
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  );
+                                                                }),
+                                                      ),
+                                                      Divider(
+                                                        height: Height * 0.02,
+                                                        color: Colors.black,
+                                                      ),
+                                                      Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
-                                                                .start,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
+                                                                .spaceEvenly,
                                                         children: [
-                                                          Text(
-                                                            'Item',
-                                                            style: TextStyle(
-                                                              fontSize:
-                                                                  Height * 0.02,
+                                                          // SizedBox(width: Width*0.01,),
+                                                          SizedBox(
+                                                            height:
+                                                                Height * 0.04,
+                                                            width: Width * 0.12,
+                                                            child:
+                                                                ElevatedButton(
+                                                              onPressed: () {
+                                                                _showSignOutDialog(
+                                                                    context);
+                                                              },
+                                                              style:
+                                                                  ElevatedButton
+                                                                      .styleFrom(
+                                                                backgroundColor:
+                                                                    const Color(
+                                                                        0xff911f2a), // Background color of the button
+                                                                foregroundColor:
+                                                                    Colors
+                                                                        .white, // Text color
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius.circular(
+                                                                          Height *
+                                                                              0.01), // Adjust the border radius as needed
+                                                                ),
+                                                              ),
+                                                              child: Text(
+                                                                'Reject',
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      Height *
+                                                                          0.02,
+                                                                ),
+                                                              ),
                                                             ),
                                                           ),
-                                                          Text(
-                                                            'Fried Combo',
-                                                            style: TextStyle(
-                                                              fontSize:
-                                                                  Height * 0.02,
-                                                            ),
+                                                          SizedBox(
+                                                            height:
+                                                                Height * 0.04,
+                                                            width: Width * 0.12,
+                                                            child:
+                                                                AssignContainer(),
                                                           ),
-                                                        ],
-                                                      ),
-                                                      SizedBox(
-                                                        width: Width * 0.19,
-                                                      ),
-                                                      Column(
-                                                        children: [
-                                                          Text(
-                                                            "Tirur-2 \n"
-                                                            "mattummal complex\n"
-                                                            "flat no:121",
-                                                            style: TextStyle(
-                                                              fontSize:
-                                                                  Height * 0.02,
+                                                          SizedBox(
+                                                            height:
+                                                                Height * 0.04,
+                                                            width: Width * 0.12,
+                                                            child:
+                                                                ElevatedButton(
+                                                              onPressed: () {
+                                                                orderController
+                                                                            .ordersList[
+                                                                                index]
+                                                                            .status ==
+                                                                        'pending'
+                                                                    ? orderController.updateStatus(orderController
+                                                                        .ordersList[
+                                                                            index]
+                                                                        .orderid)
+                                                                    : null;
+                                                              },
+                                                              style:
+                                                                  ElevatedButton
+                                                                      .styleFrom(
+                                                                backgroundColor: orderController
+                                                                            .ordersList[
+                                                                                index]
+                                                                            .status ==
+                                                                        "pending"
+                                                                    ? const Color(
+                                                                        0xff3C8A3C)
+                                                                    : Colors
+                                                                        .grey,
+                                                                foregroundColor:
+                                                                    Colors
+                                                                        .white, // Text color
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius.circular(
+                                                                          Height *
+                                                                              0.01), // Adjust the border radius as needed
+                                                                ),
+                                                              ),
+                                                              child: Text(
+                                                                'Accept',
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      Height *
+                                                                          0.02,
+                                                                ),
+                                                              ),
                                                             ),
                                                           ),
                                                         ],
                                                       )
                                                     ],
                                                   ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Divider(
-                                            height: Height * 0.02,
-                                            color: Colors.black,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              // SizedBox(width: Width*0.01,),
-                                              SizedBox(
-                                                height: Height * 0.04,
-                                                width: Width * 0.12,
-                                                child: ElevatedButton(
-                                                  onPressed: () {
-                                                    _showSignOutDialog(context);
-                                                  },
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    backgroundColor: Color(
-                                                        0xff911f2a), // Background color of the button
-                                                    foregroundColor: Colors
-                                                        .white, // Text color
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius
-                                                          .circular(Height *
-                                                              0.01), // Adjust the border radius as needed
-                                                    ),
-                                                  ),
-                                                  child: Text(
-                                                    'Reject',
-                                                    style: TextStyle(
-                                                      fontSize: Height * 0.02,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: Height * 0.04,
-                                                width: Width * 0.12,
-                                                child: AssignContainer(),
-                                              ),
-                                              SizedBox(
-                                                height: Height * 0.04,
-                                                width: Width * 0.12,
-                                                child: ElevatedButton(
-                                                  onPressed: () {},
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Color(0xff3C8A3C),
-                                                    foregroundColor: Colors
-                                                        .white, // Text color
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius
-                                                          .circular(Height *
-                                                              0.01), // Adjust the border radius as needed
-                                                    ),
-                                                  ),
-                                                  child: Text(
-                                                    'Accept',
-                                                    style: TextStyle(
-                                                      fontSize: Height * 0.02,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    );
-                                  })),
+                                                );
+                                              });
+                                    });
+                              })),
                         ],
                       ),
                     ),
@@ -334,14 +443,17 @@ class OnGoingOrders extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Sign Out'),
-          content: Text('Are you sure you want to sign out?'),
+          title: const Text('Sign Out'),
+          content: const Text('Are you sure you want to sign out?'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text('Cancel',style: TextStyle(color: Colors.grey.shade700),),
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: Colors.grey.shade700),
+              ),
             ),
             TextButton(
               onPressed: () {
@@ -353,9 +465,9 @@ class OnGoingOrders extends StatelessWidget {
                   width: Width * 0.04,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(Width * 0.01),
-                    color: Color(0xff911f2a),
+                    color: const Color(0xff911f2a),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'Reject',
                       style: TextStyle(color: Colors.white),

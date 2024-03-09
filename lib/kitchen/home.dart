@@ -1,6 +1,8 @@
 import 'package:admin/Dashboard/Notifications.dart';
 import 'package:admin/kitchen/NewOrders.dart';
 import 'package:admin/kitchen/delivered.dart';
+import 'package:admin/kitchen/kitchen_delivered.dart';
+import 'package:admin/kitchen/new_orders.dart';
 import 'package:flutter/material.dart';
 
 class KitchenHome extends StatelessWidget {
@@ -14,35 +16,35 @@ class KitchenHome extends StatelessWidget {
       {
         'title': 'New Orders',
         'image': 'asset/images/on going.jpg',
-        'page': NewOrders()
+        'page': const NewOrders()
       },
       {
         'title': 'Delivered List',
         'image': 'asset/images/cmpled food orders.jpg',
-        'page': Delivered()
+        'page': const KitchenDelivered()
       },
     ];
     return Scaffold(
         body: Container(
             height: Height,
             width: Width,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
                       'asset/images/background.png',
                     ),
                     fit: BoxFit.cover)),
             child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Column(children: [
                   Row(
                     children: [
-                      Text(
+                      const Text(
                         'Dashboard',
                         style: TextStyle(
                             fontSize: 30, fontWeight: FontWeight.bold),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       // Container(
                       //     decoration: BoxDecoration(
                       //         borderRadius: BorderRadius.circular(30),
@@ -66,15 +68,15 @@ class KitchenHome extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Divider(
+                  const Divider(
                     height: 2,
                     thickness: 1,
                     color: Colors.black,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   Container(
@@ -83,7 +85,7 @@ class KitchenHome extends StatelessWidget {
                     // color: Colors.greenAccent.shade100,
                     child: Container(
                         child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
                         crossAxisSpacing: 30,
                         mainAxisSpacing: 30,

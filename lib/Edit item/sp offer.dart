@@ -283,7 +283,7 @@ class SpOffer extends StatelessWidget {
                                                                     Width *
                                                                         0.015,
                                                                 color: Colors
-                                                                    .black),
+                                                                    .white),
                                                           ),
                                                         ),
                                                       ),

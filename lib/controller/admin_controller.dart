@@ -2,7 +2,9 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:admin/Dashboard/home.dart';
+import 'package:admin/models/cart_model.dart';
 import 'package:admin/models/deliveryboy_model.dart';
+import 'package:admin/models/order_model.dart';
 import 'package:admin/models/products_model.dart';
 import 'package:admin/models/user_model.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
@@ -400,6 +402,60 @@ class AdminController extends ChangeNotifier {
 
         usersList.add(users!);
       }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  List<OrderModel> ordersList = [];
+  OrderModel? orders;
+
+  Future fetchOrders() async {
+    try {
+      ordersList.clear();
+      final orderRef = firebaseFirestore.collection('orders');
+      final orderSnapshot = await orderRef.get();
+
+      for (var doc in orderSnapshot.docs) {
+        String orderid = doc['orderid'];
+        String userid = doc['userid'];
+        int orderPrice = doc['orderPrice'];
+        String userName = doc['userName'];
+        String userAddress = doc['userAddress'];
+        String status = doc['status'];
+        int userNumber = doc['userNumber'];
+        List orderedItems = doc['orderedItems'];
+
+        orders = OrderModel(
+          orderid: orderid,
+          userid: userid,
+          orderPrice: orderPrice,
+          userName: userName,
+          userAddress: userAddress,
+          userNumber: userNumber,
+          orderedItems: orderedItems,
+          status: status,
+        );
+
+        print(orders);
+
+        ordersList.add(orders!);
+
+        print(ordersList[0].orderedItems[0]);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future updateStatus(String docid) async {
+    try {
+      await firebaseFirestore
+          .collection('orders')
+          .doc(docid)
+          .update({"status": 'accepted'});
+      notifyListeners();
+      print('Status Updated');
     } catch (e) {
       print(e);
     }
