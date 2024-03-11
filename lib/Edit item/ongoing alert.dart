@@ -1,100 +1,96 @@
+import 'package:admin/controller/admin_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class AssignContainer extends StatefulWidget {
-  @override
-  _AssignContainerState createState() => _AssignContainerState();
-}
-
-class _AssignContainerState extends State<AssignContainer> {
-  late String selectedDeliveryBoy;
-  late double Height;
-  late double Width;
-
-  @override
-  void initState() {
-    super.initState();
-    // Initialize variables in initState
-    // Height = MediaQuery.of(context).size.height;
-    // Width = MediaQuery.of(context).size.width;
-    selectedDeliveryBoy = ''; // Initialize with an empty string
-  }
+class AssignContainer extends StatelessWidget {
+  final int index;
+  final String docid;
+  const AssignContainer({
+    required this.index,
+    required this.docid,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    Height = MediaQuery.of(context).size.height;
-    Width = MediaQuery.of(context).size.width;
-    return InkWell(
-      onTap: () {
-        _showDropdown(context);
-      },
-      child: SizedBox(
-        height: Height * 0.04,
-        width: Width * 0.12,
-        child: ElevatedButton(
-          onPressed: () {
-            _showDropdown(context);
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor:Colors.blueAccent,
-                 // Background color of the button
-            foregroundColor: Colors.white, // Text color
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                  Height * 0.01), // Adjust the border radius as needed
+    final Height = MediaQuery.of(context).size.height;
+    final Width = MediaQuery.of(context).size.width;
+    return Consumer<AdminController>(builder: (context, dlvryCOntroller, _) {
+      return InkWell(
+        onTap: () {
+          _showDropdown(context, docid);
+        },
+        child: SizedBox(
+          height: Height * 0.04,
+          width: Width * 0.12,
+          child: ElevatedButton(
+            onPressed: () {
+              dlvryCOntroller.ordersList[index].status == 'coocked'
+                  ? _showDropdown(context, docid)
+                  : null;
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor:
+                  dlvryCOntroller.ordersList[index].status == 'coocked'
+                      ? Colors.blueAccent
+                      : Colors.grey,
+              // Background color of the button
+              foregroundColor: Colors.white, // Text color
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                    Height * 0.01), // Adjust the border radius as needed
+              ),
             ),
-          ),
-          child: Text(
-            'Assign',
-            style: TextStyle(
-              fontSize: Height * 0.02,
+            child: Text(
+              'Assign',
+              style: TextStyle(
+                fontSize: Height * 0.02,
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 
-  void _showDropdown(BuildContext context) {
+  void _showDropdown(BuildContext context, String docid) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
+        return Consumer<AdminController>(
+            builder: (context, dlvryBoyController, _) {
+          return FutureBuilder(
+              future: dlvryBoyController.fetchDeliveryBoys(),
+              builder: (context, snapshot) {
+                print(dlvryBoyController.selectedDeliveryBoy);
+                return AlertDialog(
+                  title: const Text('Select Delivery Boy'),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: List.generate(
+                      dlvryBoyController.deliveryBoysList.length,
+                      (index) => RadioListTile(
+                        activeColor: Colors.blueAccent,
+                        title: Text(dlvryBoyController
+                            .deliveryBoysList[index].delvryBoyName),
+                        value: dlvryBoyController
+                            .deliveryBoysList[index].delvryBoyName,
+                        groupValue: dlvryBoyController.selectedDeliveryBoy,
+                        onChanged: (String? value) {
+                          if (value != null) {
+                            value = dlvryBoyController
+                                .deliveryBoysList[index].delvryBoyID;
 
-          title: Text('Select Delivery Boy'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              RadioListTile(
-                activeColor: Colors.blueAccent,
-                title: Text('Delivery Boy 1'),
-                value: 'Delivery Boy 1',
-                groupValue: selectedDeliveryBoy,
-                onChanged: (String? value) {
-                  if (value != null) {
-                    setState(() {
-                      selectedDeliveryBoy = value;
-                    });
-                  }
-                  Navigator.of(context).pop();
-                },
-              ),
-              RadioListTile(
-                activeColor: Colors.blueAccent,
-                title: Text('Delivery Boy 2'),
-                value: 'Delivery Boy 2',
-                groupValue: selectedDeliveryBoy,
-                onChanged: (String? value) {
-                  if (value != null) {
-                    setState(() {
-                      selectedDeliveryBoy = value;
-                    });
-                  }
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          ),
-        );
+                            dlvryBoyController.setDeliveryBoy(value, docid);
+                          }
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
+                  ),
+                );
+              });
+        });
       },
     );
   }

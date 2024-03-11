@@ -126,8 +126,8 @@ class AddDelievryBoy extends StatelessWidget {
                                                 .passwordcontroller.text,
                                             addDelvBoyController
                                                 .licensenumbercontroller.text,
-                                            addDelvBoyController
-                                                .phonenumbercontroller.text,
+                                            int.parse(addDelvBoyController
+                                                .phonenumbercontroller.text),
                                             addDelvBoyController
                                                 .vehiclenumbercontroller.text,
                                             context);

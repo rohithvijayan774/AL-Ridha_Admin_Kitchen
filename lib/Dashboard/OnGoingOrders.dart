@@ -355,7 +355,14 @@ class OnGoingOrders extends StatelessWidget {
                                                                 Height * 0.04,
                                                             width: Width * 0.12,
                                                             child:
-                                                                AssignContainer(),
+                                                                AssignContainer(
+                                                              index: index,
+                                                              docid:
+                                                                  orderController
+                                                                      .ordersList[
+                                                                          index]
+                                                                      .orderid,
+                                                            ),
                                                           ),
                                                           SizedBox(
                                                             height:

@@ -78,7 +78,7 @@ class AdminController extends ChangeNotifier {
     String delvryBoyEmail,
     String delvryBoyPassword,
     String delvryBoyLicenseNumber,
-    String delvryBoyMobileNumber,
+    int delvryBoyMobileNumber,
     String delvryBoyVehicleNumber,
     context,
   ) async {
@@ -159,7 +159,7 @@ class AdminController extends ChangeNotifier {
         String delvryBoyName = doc['delvryBoyName'];
         String delvryBoyEmail = doc['delvryBoyEmail'];
         String delvryBoyLicenseNumber = doc['delvryBoyLicenseNumber'];
-        String delvryBoyMobileNumber = doc['delvryBoyMobileNumber'];
+        int delvryBoyMobileNumber = doc['delvryBoyMobileNumber'];
         String delvryBoyVehicleNumber = doc['delvryBoyVehicleNumber'];
 
         deliveryBoy = DeliveryBoyModel(
@@ -459,5 +459,22 @@ class AdminController extends ChangeNotifier {
     } catch (e) {
       print(e);
     }
+  }
+
+  String? selectedDeliveryBoy;
+
+  Future setDeliveryBoy(String value, String docid) async {
+    selectedDeliveryBoy = value;
+
+    await firebaseFirestore
+        .collection('orders')
+        .doc(docid)
+        .update({'deliveryboy': value});
+    await firebaseFirestore
+        .collection('orders')
+        .doc(docid)
+        .update({'status': 'assigned'});
+
+    notifyListeners();
   }
 }

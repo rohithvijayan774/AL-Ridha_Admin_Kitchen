@@ -3,7 +3,7 @@ class DeliveryBoyModel {
   String delvryBoyName;
   String delvryBoyEmail;
   String delvryBoyLicenseNumber;
-  String delvryBoyMobileNumber;
+  int delvryBoyMobileNumber;
   String? delvryBoyVehicleNumber;
 
   DeliveryBoyModel({
